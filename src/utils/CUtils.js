@@ -6,8 +6,7 @@ const typeSizes = {
     'double': 8,
     'char': 1,
     'byte': 1,
-    'short': 2,
-    "color24": 3
+    'short': 2
 };
 
 function getOffset(obj, key) {

@@ -1,4 +1,5 @@
 import vec3_t from "../SDK/vec3_t"
+import color24 from "./color24";
 
 export default {
     entityType: "int",
@@ -21,7 +22,7 @@ export default {
 
     rendermode: "int",
     renderamt: "int",
-    rendercolor: "color24",
+    rendercolor: color24,
     renderfx: "int",
 
     movetype: "int",

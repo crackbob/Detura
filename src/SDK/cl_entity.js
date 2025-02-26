@@ -21,8 +21,8 @@ export default {
 
     lastmove: "float",
 
-    origin: "vec3_t",
-    angles: "vec3_t",
+    origin: vec3_t,
+    angles: vec3_t,
 
     attachment: vec3_t,
 
