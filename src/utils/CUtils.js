@@ -109,8 +109,13 @@ function setStruct(struct, ptr, newStruct) {
     Object.keys(struct).forEach(function (key) {
         let type = struct[key];
         let offset = getOffset(struct, key);
-        setCValue(type, ptr + offset, newStruct[key]);
-    })
+
+        if (typeof type === 'object' && type !== null && !Array.isArray(type)) {
+            setStruct(type, ptr + offset, newStruct[key]);
+        } else if (typeSizes[type]) {
+            setCValue(type, ptr + offset, newStruct[key]);
+        }
+    });
 }
 
 export default { typeSizes, getOffset, getTotalSize, getCValue, setCValue, getStruct, setStruct }
