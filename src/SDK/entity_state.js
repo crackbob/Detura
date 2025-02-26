@@ -29,8 +29,8 @@ export default {
     animtime: "float",
     framerate: "float",
     body: "int",
-    controller: "byte",
-    blending: "byte",
+    controller: "pad_4",
+    blending: "pad_4",
     velocity: vec3_t,
 
     mins: vec3_t,
