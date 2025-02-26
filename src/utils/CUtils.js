@@ -6,15 +6,14 @@ const typeSizes = {
     'double': 8,
     'char': 1,
     'byte': 1,
-    'short': 2
+    'short': 2,
+    'pad_4': 4,
+    'pad_2': 2,
+    "pad_1016": 1016
 };
 
 function getOffset(obj, key) {
     let offset = 0;
-
-    if (key.includes("pad_")) {
-        return parseInt(key.replace("pad_", ""));
-    }
     
     for (const k in obj) {
         if (k === key) {
@@ -30,7 +29,7 @@ function getOffset(obj, key) {
         }
     }
     
-    return -1;
+    return offset;
 }
 
 function getTotalSize(obj) {
