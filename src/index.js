@@ -19,3 +19,7 @@ function zeroGravity () {
     movevars.gravity = 0;
     CUtils.setStruct(movevars_s, Module._clgame + 1032, movevars);
 }
+
+function fullbright () {
+    Module.Cvar_Set("r_fullbright", "1");
+}

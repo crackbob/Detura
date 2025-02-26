@@ -11,6 +11,10 @@ const typeSizes = {
 
 function getOffset(obj, key) {
     let offset = 0;
+
+    if (key.includes("pad_")) {
+        return parseInt(key.replace("pad_", ""));
+    }
     
     for (const k in obj) {
         if (k === key) {
