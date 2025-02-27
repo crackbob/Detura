@@ -7,6 +7,7 @@ const typeSizes = {
     'char': 1,
     'byte': 1,
     'short': 2,
+    "uint32_t": 4,
     'pad_4': 4,
     'pad_2': 2,
     "pad_1016": 1016

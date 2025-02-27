@@ -1,4 +1,4 @@
-import vec3_t from "../SDK/vec3_t"
+import vec3_t from "./vec3_t"
 import color24 from "./color24";
 
 export default {

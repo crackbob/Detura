@@ -1,4 +1,4 @@
-import entity_state from "./entity_state";
+import entity_state from "./entity_state_t";
 import latchedvars_t from "./latchedvars_t";
 import mouth_t from "./mouth_t";
 import position_history_t from "./position_history_t";
