@@ -21,7 +21,6 @@ window.client_static_t = client_static_t;
 function zeroGravity () {
     let movevars = CUtils.cStruct(movevars_s, Module._clgame + 1032);
     movevars.gravity = 0;
-    CUtils.setStruct(movevars_s, Module._clgame + 1032, movevars);
 }
 
 function fullbright () {
