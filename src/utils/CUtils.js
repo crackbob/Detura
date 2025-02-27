@@ -15,12 +15,12 @@ const typeSizes = {
 
 function getOffset(obj, key) {
     let offset = 0;
-    
+
     for (const k in obj) {
         if (k === key) {
             return offset;
         }
-        
+
         const type = obj[k];
 
         if (typeof type === 'object' && type !== null) {
@@ -29,7 +29,7 @@ function getOffset(obj, key) {
             offset += typeSizes[type];
         }
     }
-    
+
     return offset;
 }
 
@@ -51,11 +51,11 @@ function getCValue(type, ptr) {
     if (type == "float") {
         return Module.HEAPF32[ptr >> 2];
     }
-    
+
     if (type == "int") {
         return Module.HEAP32[ptr >> 2];
     }
-    
+
     if (type == "bool" || type == "short") {
         return Module.HEAP16[ptr >> 1];
     }
@@ -73,11 +73,11 @@ function setCValue(type, ptr, value) {
     if (type == "float") {
         Module.HEAPF32[ptr >> 2] = value;
     }
-    
+
     if (type == "int") {
         Module.HEAP32[ptr >> 2] = value;
     }
-    
+
     if (type == "bool" || type == "short") {
         Module.HEAP16[ptr >> 1] = value;
     }
@@ -91,32 +91,36 @@ function setCValue(type, ptr, value) {
     }
 }
 
-function getStruct(struct, ptr) {
-    let retVal = {};
-    Object.keys(struct).forEach(function (key) {
-        let type = struct[key];
-        let offset = getOffset(struct, key);
+function cStruct(struct, ptr) {
+    const structObject = {};
 
-        if (typeof type === 'object' && type !== null && !Array.isArray(type)) {
-            retVal[key] = getStruct(type, ptr + offset);
-        } else if (typeSizes[type]) {
-            retVal[key] = getCValue(type, ptr + offset);
-        }
-    });
-    return retVal;
+    for (const key in struct) {
+        const type = struct[key];
+        const offset = getOffset(struct, key);
+
+        Object.defineProperty(structObject, key, {
+            get() {
+                if (typeof type === 'object' && type !== null) {
+                    return cStruct(type, ptr + offset);
+                } else if (typeSizes[type]) {
+                    return getCValue(type, ptr + offset);
+                }
+                return undefined;
+            },
+            set(value) {
+                if (typeof type === 'object' && type !== null) {
+                    const nestedStruct = cStruct(type, ptr + offset);
+                    Object.assign(nestedStruct, value);
+                } else if (typeSizes[type]) {
+                    setCValue(type, ptr + offset, value);
+                }
+            },
+            enumerable: true,
+            configurable: true 
+        });
+    }
+
+    return structObject;
 }
 
-function setStruct(struct, ptr, newStruct) {
-    Object.keys(struct).forEach(function (key) {
-        let type = struct[key];
-        let offset = getOffset(struct, key);
-
-        if (typeof type === 'object' && type !== null && !Array.isArray(type)) {
-            setStruct(type, ptr + offset, newStruct[key]);
-        } else if (typeSizes[type]) {
-            setCValue(type, ptr + offset, newStruct[key]);
-        }
-    });
-}
-
-export default { typeSizes, getOffset, getTotalSize, getCValue, setCValue, getStruct, setStruct }
+export default { typeSizes, getOffset, getTotalSize, getCValue, setCValue, cStruct };

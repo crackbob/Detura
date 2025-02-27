@@ -12,14 +12,14 @@ window.vec3_t = vec3_t;
 window.entity_state_t = entity_state_t;
 window.clgame_static_t = clgame_static_t;
 
-console.log(CUtils.getStruct(cl_entity, Module._CL_GetLocalPlayer()));
+console.log(CUtils.cStruct(cl_entity, Module._CL_GetLocalPlayer()));
 
 window.cl_entity = cl_entity;
 window.client_static_t = client_static_t;
 
 // POC
 function zeroGravity () {
-    let movevars = CUtils.getStruct(movevars_s, Module._clgame + 1032);
+    let movevars = CUtils.cStruct(movevars_s, Module._clgame + 1032);
     movevars.gravity = 0;
     CUtils.setStruct(movevars_s, Module._clgame + 1032, movevars);
 }
