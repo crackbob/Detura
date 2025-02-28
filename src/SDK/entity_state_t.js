@@ -1,78 +1,205 @@
-import vec3_t from "./vec3_t"
+import vec3_t from "./vec3_t";
 import color24 from "./color24";
 
 export default {
-    entityType: "int",
-    number: "int",
-    msg_time: "float",
-    messagenum: "int",
+    entityType: {
+        type: "int"
+    },
+    number: {
+        type: "int"
+    },
+    msg_time: {
+        type: "float"
+    },
+    messagenum: {
+        type: "int"
+    },
 
-    origin: vec3_t,
-    angles: vec3_t,
+    origin: {
+        type: vec3_t
+    },
+    angles: {
+        type: vec3_t
+    },
 
-    modelindex: "int",
-    sequence: "int",
-    frame: "float",
-    colormap: "int",
-    skin: "short",
-    solid: "short",
-    effects: "int",
-    scale: "float",
-    eflags: "byte",
+    modelindex: {
+        type: "int"
+    },
+    sequence: {
+        type: "int"
+    },
+    frame: {
+        type: "float"
+    },
+    colormap: {
+        type: "int"
+    },
+    skin: {
+        type: "short"
+    },
+    solid: {
+        type: "short"
+    },
+    effects: {
+        type: "int"
+    },
+    pad: {
+        type: "pad_4" // i do NOT know if this is in the right spot
+    },
+    scale: {
+        type: "float"
+    },
+    eflags: {
+        type: "byte"
+    },
 
-    rendermode: "int",
-    renderamt: "int",
-    rendercolor: color24,
-    renderfx: "int",
+    rendermode: {
+        type: "int"
+    },
+    renderamt: {
+        type: "int"
+    },
+    rendercolor: {
+        type: color24
+    },
+    renderfx: {
+        type: "int"
+    },
 
-    movetype: "int",
-    animtime: "float",
-    framerate: "float",
-    body: "int",
-    controller: "pad_4",
-    blending: "pad_4",
-    velocity: vec3_t,
+    movetype: {
+        type: "int"
+    },
+    animtime: {
+        type: "float"
+    },
+    framerate: {
+        type: "float"
+    },
+    body: {
+        type: "int"
+    },
+    controller: {
+        type: "pad_4"
+    },
+    blending: {
+        type: "pad_4"
+    },
+    velocity: {
+        type: vec3_t
+    },
 
-    mins: vec3_t,
-    maxs: vec3_t,
+    mins: {
+        type: vec3_t
+    },
+    maxs: {
+        type: vec3_t
+    },
 
-    aiment: "int",
-    owner: "int",
+    aiment: {
+        type: "int"
+    },
+    owner: {
+        type: "int"
+    },
 
-    friction: "float",
-    gravity: "float",
+    friction: {
+        type: "float"
+    },
+    gravity: {
+        type: "float"
+    },
 
-    team: "int",
-    playerclass: "int",
-    health: "int",
-    spectator: "int",
-    weaponmodel: "int",
-    gaitsequence: "int",
-    basevelocity: vec3_t,
-    usehull: "int",
-    oldbuttons: "int",
-    onground: "int",
-    iStepLeft: "int",
-    flFallVelocity: "float",
+    team: {
+        type: "int"
+    },
+    playerclass: {
+        type: "int"
+    },
+    health: {
+        type: "int"
+    },
+    spectator: {
+        type: "int"
+    },
+    weaponmodel: {
+        type: "int"
+    },
+    gaitsequence: {
+        type: "int"
+    },
+    basevelocity: {
+        type: vec3_t
+    },
+    usehull: {
+        type: "int"
+    },
+    oldbuttons: {
+        type: "int"
+    },
+    onground: {
+        type: "int"
+    },
+    iStepLeft: {
+        type: "int"
+    },
+    flFallVelocity: {
+        type: "float"
+    },
 
-    fov: "float",
-    weaponanim: "int",
+    fov: {
+        type: "float"
+    },
+    weaponanim: {
+        type: "int"
+    },
 
-    startpos: vec3_t,
-    endpos: vec3_t,
-    impacttime: "float",
-    starttime: "float",
+    startpos: {
+        type: vec3_t
+    },
+    endpos: {
+        type: vec3_t
+    },
+    impacttime: {
+        type: "float"
+    },
+    starttime: {
+        type: "float"
+    },
 
-    iuser1: "int",
-    iuser2: "int",
-    iuser3: "int",
-    iuser4: "int",
-    fuser1: "float",
-    fuser2: "float",
-    fuser3: "float",
-    fuser4: "float",
-    vuser1: vec3_t,
-    vuser2: vec3_t,
-    vuser3: vec3_t,
-    vuser4: vec3_t,
+    iuser1: {
+        type: "int"
+    },
+    iuser2: {
+        type: "int"
+    },
+    iuser3: {
+        type: "int"
+    },
+    iuser4: {
+        type: "int"
+    },
+    fuser1: {
+        type: "float"
+    },
+    fuser2: {
+        type: "float"
+    },
+    fuser3: {
+        type: "float"
+    },
+    fuser4: {
+        type: "float"
+    },
+    vuser1: {
+        type: vec3_t
+    },
+    vuser2: {
+        type: vec3_t
+    },
+    vuser3: {
+        type: vec3_t
+    },
+    vuser4: {
+        type: vec3_t
+    },
 };

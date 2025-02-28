@@ -1,5 +1,11 @@
 export default {
-    "r": "byte",
-    "g": "byte",
-    "b": "byte",
-}
+    r: {
+        type: "byte"
+    },
+    g: {
+        type: "byte"
+    },
+    b: {
+        type: "byte"
+    }
+};

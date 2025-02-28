@@ -1,30 +1,32 @@
 let typeMap = {
-    'float': { size: 4, heap: Module.HEAPF32 },
-    'int': { size: 4, heap: Module.HEAP32 },
-    'bool': { size: 4, heap: Module.HEAP32 },
-    'string': { size: 4, heap: Module.HEAP32 },
-    'double': { size: 8, heap: Module.HEAPF64 },
-    'char': { size: 1, heap: Module.HEAP8 },
-    'byte': { size: 1, heap: Module.HEAP8 },
-    'short': { size: 2, heap: Module.HEAP16 },
-    'uint32_t': { size: 4, heap: Module.HEAP32 }
+    'float': 4,
+    'int': 4,
+    'bool': 4,
+    'string': 4,
+    'double': 8,
+    'char': 1,
+    'byte': 1,
+    'short': 2,
+    "uint32_t": 4,
+    "dynarray": 4
 };
 
 function getOffset(obj, key) {
     let offset = 0;
 
     for (let k in obj) {
+        let prop = obj[k];
+
         if (k === key) {
             return offset;
         }
 
-        let type = obj[k];
-        if (typeof type === 'object' && type !== null) {
-            offset += getTotalSize(type);
-        } else if (typeMap[type]) {
-            offset += typeMap[type].size;
-        } else if (type?.includes && type.includes("pad_")) {
-            offset += parseInt(type.replace("pad_", ""));
+        if (typeof prop.type === 'object' && prop.type !== null) {
+            offset += getTotalSize(prop.type);
+        } else if (typeMap[prop.type]) {
+            offset += typeMap[prop.type];
+        } else if (prop.type?.includes && prop.type.includes("pad_")) {
+            offset += parseInt(prop.type.replace("pad_", ""));
         }
     }
 
@@ -35,12 +37,14 @@ function getTotalSize(obj) {
     let totalSize = 0;
 
     for (let k in obj) {
-        let type = obj[k];
+        let prop = obj[k];
 
-        if (typeof type === 'object' && type !== null) {
-            totalSize += getTotalSize(type);
-        } else if (typeMap[type]) {
-            totalSize += typeMap[type].size;
+        if (typeof prop.type === 'object' && prop.type !== null) {
+            totalSize += getTotalSize(prop.type);
+        } else if (typeMap[prop.type]) {
+            totalSize += typeMap[prop.type];
+        } else if (prop.type?.includes && prop.type.includes("pad_")) {
+            totalSize += parseInt(prop.type.replace("pad_", ""));
         }
     }
 
@@ -48,39 +52,69 @@ function getTotalSize(obj) {
 }
 
 function getCValue(type, ptr) {
-    let typeInfo = typeMap[type] || typeMap['int'];
-    let index = ptr / typeInfo.size;
-    return typeInfo.heap[index];
+    switch (type) {
+        case "float":
+            return Module.HEAPF32[ptr >> 2];
+        case "int":
+            return Module.HEAP32[ptr >> 2];
+        case "bool":
+        case "short":
+            return Module.HEAP16[ptr >> 1];
+        case "byte":
+            return Module.HEAP8[ptr];
+        case "double":
+            return Module.HEAPF64[ptr >> 3];
+        default:
+            return Module.HEAP32[ptr >> 2];
+    }
 }
 
 function setCValue(type, ptr, value) {
-    let typeInfo = typeMap[type] || typeMap['int'];
-    let index = ptr / typeInfo.size;
-    typeInfo.heap[index] = value;
+    switch (type) {
+        case "float":
+            Module.HEAPF32[ptr >> 2] = value;
+            break;
+        case "int":
+            Module.HEAP32[ptr >> 2] = value;
+            break;
+        case "bool":
+        case "short":
+            Module.HEAP16[ptr >> 1] = value;
+            break;
+        case "byte":
+            Module.HEAP8[ptr] = value;
+            break;
+        case "double":
+            Module.HEAPF64[ptr >> 3] = value;
+            break;
+        default:
+            Module.HEAP32[ptr >> 2] = value;
+    }
 }
 
 function cStruct(struct, ptr) {
     let structObject = {};
 
     for (let key in struct) {
-        let type = struct[key];
+        let prop = struct[key];
         let offset = getOffset(struct, key);
 
         Object.defineProperty(structObject, key, {
             get() {
-                if (typeof type === 'object' && type !== null) {
-                    return cStruct(type, ptr + offset);
-                } else if (typeMap[type]) {
-                    return getCValue(type, ptr + offset);
+                if (prop.type == "dynarray") {
+                    return cArrayAt(prop.itemType, ptr + offset);
                 }
-                return undefined;
+                if (typeof prop.type === 'object' && prop.type !== null) {
+                    return cStruct(prop.type, ptr + offset);
+                }
+                return getCValue(prop.type, ptr + offset);;
             },
             set(value) {
-                if (typeof type === 'object' && type !== null) {
-                    let nestedStruct = cStruct(type, ptr + offset);
+                if (typeof prop.type === 'object' && prop.type !== null) {
+                    let nestedStruct = cStruct(prop, ptr + offset);
                     Object.assign(nestedStruct, value);
-                } else if (typeMap[type]) {
-                    setCValue(type, ptr + offset, value);
+                } else if (typeMap[prop.type]) {
+                    setCValue(prop.type, ptr + offset, value);
                 }
             },
             enumerable: true,
@@ -91,4 +125,39 @@ function cStruct(struct, ptr) {
     return structObject;
 }
 
-export default { typeMap, getOffset, getTotalSize, getCValue, setCValue, cStruct };
+function cArrayAt(type, ptr) {
+    let firstIndex = getCValue(type, ptr);
+    let iteratorSize = getTotalSize(type);
+
+    const handler = {
+        get(target, prop) {
+            if (typeMap[type]) {
+                return getCValue(type, firstIndex + (prop * iteratorSize));
+            } else {
+                return cStruct(type, firstIndex + (prop * iteratorSize));
+            }
+        }
+    };
+    
+    return new Proxy({}, handler);
+}
+
+function cArray(type, ptr, size) {
+    let instance = [];
+    let iteratorSize = getTotalSize(type);
+
+    let firstIndex = getCValue(type, ptr);
+
+    for (let offset = 0; offset < size; offset++) {
+        if (typeMap[type]) {
+            instance.push(getCValue(type, firstIndex + (offset * iteratorSize)));
+        } else {
+            instance.push(cStruct(type, firstIndex + (offset * iteratorSize)));
+        }
+        
+    }
+
+    return instance;
+}
+
+export default { typeMap, getOffset, getTotalSize, getCValue, setCValue, cStruct, cArray, cArrayAt };

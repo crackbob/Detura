@@ -1,5 +1,5 @@
 export default {
-    x: 'float',
-    y: 'float',
-    z: 'float'
+    x: { type: 'float' },
+    y: { type: 'float' },
+    z: { type: 'float' }
 };

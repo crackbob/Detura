@@ -1,5 +1,11 @@
 export default {
-	"mouthopen": "byte",
-	"sndcount": "byte",
-	"sndavg": "int"
+    mouthopen: {
+        type: "byte"
+    },
+    sndcount: {
+        type: "byte"
+    },
+    sndavg: {
+        type: "int"
+    }
 };

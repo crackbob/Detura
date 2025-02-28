@@ -5,34 +5,77 @@ import position_history_t from "./position_history_t";
 import vec3_t from "./vec3_t";
 
 export default {
-    index: "int",
-    player: "int",
+    index: {
+        type: "int"
+    },
+    player: {
+        type: "int"
+    },
 
-    baseline: entity_state,
-    prevstate: entity_state,
-    curstate: entity_state,
+    baseline: {
+        type: entity_state
+    },
+    prevstate: {
+        type: entity_state
+    },
+    curstate: {
+        type: entity_state
+    },
 
-    current_position: "int",
-    ph: position_history_t,
+    current_position: {
+        type: "int"
+    },
+    ph: {
+        type: position_history_t
+    },
 
-    mouth: mouth_t,
+    mouth: {
+        type: mouth_t
+    },
 
-    latched: latchedvars_t,
+    latched: {
+        type: latchedvars_t
+    },
 
-    lastmove: "float",
+    lastmove: {
+        type: "float"
+    },
 
-    origin: vec3_t,
-    angles: vec3_t,
+    origin: {
+        type: vec3_t
+    },
+    angles: {
+        type: vec3_t
+    },
 
-    attachment: vec3_t,
+    attachment: {
+        type: vec3_t
+    },
 
-    trivial_accept: "int",
+    trivial_accept: {
+        type: "int"
+    },
 
-    model: "model_s",
-    efrag: "efrag_s", 
-    topnode: "mnode_s",
+    model: {
+        type: "model_s"
+    },
+    efrag: {
+        type: "efrag_s"
+    }, 
+    topnode: {
+        type: "mnode_s"
+    },
 
-    syncbase: "float",
-    visframe: "int",
-    cvFloorColor: "colorVec"
+    syncbase: {
+        type: "float"
+    },
+    visframe: {
+        type: "int"
+    },
+    cvFloorColor: {
+        type: "colorVec"
+    },
+    imlazy: {
+        type: "pad_1834"
+    }
 };

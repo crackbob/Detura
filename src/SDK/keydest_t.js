@@ -1,6 +1,14 @@
 export default {
-	"key_console": "int",
-	"key_game": "int",
-	"key_menu": "int",
-	"key_message": "int"
+    key_console: {
+        type: "int"
+    },
+    key_game: {
+        type: "int"
+    },
+    key_menu: {
+        type: "int"
+    },
+    key_message: {
+        type: "int"
+    }
 };

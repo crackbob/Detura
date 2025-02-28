@@ -1,8 +1,20 @@
 export default {
-	"ca_disconnected": "int",
-	"ca_connecting": "int",
-	"ca_connected": "int",
-	"ca_validate": "int",
-	"ca_active": "int",
-	"ca_cinematic": "int"
+    ca_disconnected: {
+        type: "int"
+    },
+    ca_connecting: {
+        type: "int"
+    },
+    ca_connected: {
+        type: "int"
+    },
+    ca_validate: {
+        type: "int"
+    },
+    ca_active: {
+        type: "int"
+    },
+    ca_cinematic: {
+        type: "int"
+    }
 };
