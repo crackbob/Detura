@@ -8,7 +8,8 @@ let typeMap = {
     'byte': 1,
     'short': 2,
     "uint32_t": 4,
-    "dynarray": 4
+    "dynarray": 4,
+    "unsigned": 7
 };
 
 function getOffset(obj, key) {

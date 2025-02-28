@@ -1,3 +1,4 @@
+import colorVec from "./colorVec";
 import entity_state from "./entity_state_t";
 import latchedvars_t from "./latchedvars_t";
 import mouth_t from "./mouth_t";
@@ -83,9 +84,6 @@ export default {
         type: "int"
     },
     cvFloorColor: {
-        type: "colorVec"
-    },
-    imlazy: {
-        type: "pad_28"
+        type: colorVec
     }
 };
