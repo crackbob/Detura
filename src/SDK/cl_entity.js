@@ -86,6 +86,6 @@ export default {
         type: "colorVec"
     },
     imlazy: {
-        type: "pad_1834"
+        type: "pad_28"
     }
 };
