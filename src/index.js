@@ -5,6 +5,7 @@ import vec3_t from "./SDK/vec3_t";
 import entity_state_t from "./SDK/entity_state_t";
 import clgame_static_t from "./SDK/clgame_static_t";
 import client_static_t from "./SDK/client_static_t";
+import position_history_t from "./SDK/position_history_t";
 
 window.CUtils = CUtils;
 window.movevars_s = movevars_s;
@@ -16,6 +17,7 @@ console.log(CUtils.cStruct(cl_entity, Module._CL_GetLocalPlayer()));
 
 window.cl_entity = cl_entity;
 window.client_static_t = client_static_t;
+window.position_history_t = position_history_t
 
 // POC
 function zeroGravity () {

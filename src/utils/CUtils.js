@@ -27,6 +27,8 @@ function getOffset(obj, key) {
             offset += typeMap[prop.type];
         } else if (prop.type?.includes && prop.type.includes("pad_")) {
             offset += parseInt(prop.type.replace("pad_", ""));
+        } else if (prop.type == "array") {
+            return offset += getTotalSize(prop.itemType) * prop.size;
         }
     }
 
@@ -45,6 +47,8 @@ function getTotalSize(obj) {
             totalSize += typeMap[prop.type];
         } else if (prop.type?.includes && prop.type.includes("pad_")) {
             totalSize += parseInt(prop.type.replace("pad_", ""));
+        } else if (prop.type == "array") {
+            return totalSize += getTotalSize(prop.itemType) * prop.size;
         }
     }
 
@@ -103,6 +107,9 @@ function cStruct(struct, ptr) {
             get() {
                 if (prop.type == "dynarray") {
                     return cArrayAt(prop.itemType, ptr + offset);
+                }
+                if (prop.type == "array") {
+                    return cArray(prop.itemType, ptr + offset, prop.size);
                 }
                 if (typeof prop.type === 'object' && prop.type !== null) {
                     return cStruct(prop.type, ptr + offset);

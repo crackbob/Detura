@@ -23,9 +23,13 @@ export default {
         type: "float"
     },
     prevcontroller: {
-        type: "pad_4"
-    },
+		type: "array",
+		itemType: "byte",
+		size: 4
+	},
     prevblending: {
-        type: "pad_2"
-    }
+		type: "array",
+		itemType: "byte",
+		size: 2
+	},
 };

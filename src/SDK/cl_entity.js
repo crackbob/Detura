@@ -26,7 +26,9 @@ export default {
         type: "int"
     },
     ph: {
-        type: position_history_t
+        type: "array",
+        itemType: position_history_t,
+        size: 64
     },
 
     mouth: {
