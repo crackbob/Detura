@@ -25,6 +25,7 @@ export default {
     current_position: {
         type: "int"
     },
+
     ph: {
         type: "array",
         itemType: position_history_t,
@@ -43,15 +44,22 @@ export default {
         type: "float"
     },
 
+    bro: {
+        type: "pad_14"
+    },
+
     origin: {
         type: vec3_t
     },
+
     angles: {
         type: vec3_t
     },
 
     attachment: {
-        type: vec3_t
+        type: "array",
+        itemType: vec3_t,
+        size: 4
     },
 
     trivial_accept: {

@@ -8,7 +8,9 @@ export default {
         type: "float"
     },
     prevseqblending: {
-        type: "pad_2"
+        type: "array",
+		itemType: "byte",
+		size: 2
     },
     prevorigin: {
         type: vec3_t

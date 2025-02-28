@@ -28,7 +28,7 @@ function getOffset(obj, key) {
         } else if (prop.type?.includes && prop.type.includes("pad_")) {
             offset += parseInt(prop.type.replace("pad_", ""));
         } else if (prop.type == "array") {
-            return offset += getTotalSize(prop.itemType) * prop.size;
+            offset += getTotalSize(prop.itemType) * prop.size;
         }
     }
 
@@ -48,7 +48,7 @@ function getTotalSize(obj) {
         } else if (prop.type?.includes && prop.type.includes("pad_")) {
             totalSize += parseInt(prop.type.replace("pad_", ""));
         } else if (prop.type == "array") {
-            return totalSize += getTotalSize(prop.itemType) * prop.size;
+            totalSize += getTotalSize(prop.itemType) * prop.size;
         }
     }
 
