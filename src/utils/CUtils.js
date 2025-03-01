@@ -9,7 +9,8 @@ let typeMap = {
     'short': 2,
     "uint32_t": 4,
     "dynarray": 4,
-    "unsigned": 7
+    "unsigned": 7,
+    "ptr": 4
 };
 
 function getOffset(obj, key) {
@@ -112,10 +113,13 @@ function cStruct(struct, ptr) {
                 if (prop.type == "array") {
                     return cArray(prop.itemType, ptr + offset, prop.size);
                 }
+                if (prop.type == "ptr") {
+                    return cStruct(prop.itemType, ptr + offset);
+                }
                 if (typeof prop.type === 'object' && prop.type !== null) {
                     return cStruct(prop.type, ptr + offset);
                 }
-                return getCValue(prop.type, ptr + offset);;
+                return getCValue(prop.type, ptr + offset);
             },
             set(value) {
                 if (typeof prop.type === 'object' && prop.type !== null) {
@@ -168,4 +172,10 @@ function cArray(type, ptr, size) {
     return instance;
 }
 
-export default { typeMap, getOffset, getTotalSize, getCValue, setCValue, cStruct, cArray, cArrayAt };
+function createStruct (type) {
+    let size = getTotalSize(type);
+    let ptr = Module._malloc(size);
+    return cStruct(type, ptr);
+}
+
+export default { typeMap, getOffset, getTotalSize, getCValue, setCValue, cStruct, cArray, cArrayAt, createStruct };

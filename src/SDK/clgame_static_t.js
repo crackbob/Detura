@@ -1,5 +1,6 @@
 import cl_entity from "./cl_entity";
 import movevars_s from "./movevars_s";
+import playermove_t from "./playermove_t";
 
 export default {
     "bruh": {
@@ -33,4 +34,13 @@ export default {
 	"oldmovevars": {
         type: movevars_s
     },
+
+    "idkWHy": {
+        type: "pad_104"
+    },
+
+    "pMove": {
+        type: "ptr",
+        itemType: playermove_t
+    },	
 }

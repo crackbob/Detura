@@ -7,6 +7,10 @@ import clgame_static_t from "./SDK/clgame_static_t";
 import client_static_t from "./SDK/client_static_t";
 import position_history_t from "./SDK/position_history_t";
 import latchedvars_t from "./SDK/latchedvars_t";
+import client_t from "./SDK/client_t";
+import sv_client_t from "./SDK/sv_client_t";
+import server_t from "./SDK/server_t";
+import playermove_t from "./SDK/playermove_t";
 
 window.CUtils = CUtils;
 window.movevars_s = movevars_s;
@@ -20,6 +24,8 @@ window.cl_entity = cl_entity;
 window.client_static_t = client_static_t;
 window.position_history_t = position_history_t
 window.latchedvars_t = latchedvars_t;
+window.server_t = server_t;
+window.playermove_t = playermove_t;
 
 // POC
 function zeroGravity () {

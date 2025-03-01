@@ -80,9 +80,11 @@ export default {
     syncbase: {
         type: "float"
     },
+    
     visframe: {
         type: "int"
     },
+
     cvFloorColor: {
         type: colorVec
     }
